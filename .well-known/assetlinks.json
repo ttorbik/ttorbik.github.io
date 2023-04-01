@@ -4,7 +4,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.agrok.SapAnalysis.dev",
-      "sha256_cert_fingerprints": ["6F:63:15:1C:A3:05:1F:0D:65:BB:61:67:51:58:99:95:6C:EF:F8:4A:52:30:44:5C:B4:C4:44:15:E3:10:91:B3"]
+      "sha256_cert_fingerprints": ["BA:6F:FF:CB:50:48:F7:B9:F9:FD:E6:AD:A8:1B:D7:3C:8B:71:A8:5C:87:C3:26:FE:AA:E9:13:F1:16:93:5F:23"]
     }
   }
 ]
