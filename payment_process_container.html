@@ -32,8 +32,7 @@
             console.log(`event = ${event}`);
             if (event.type) {
                 // Post the message to the parent window
-                window.location.href = "agrokapp://myapp"
-                //window.parent.postMessage(event.data, "*");
+                window.parent.postMessage(event.data, "*");
             }
         }
 
