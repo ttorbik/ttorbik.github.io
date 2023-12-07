@@ -85,27 +85,27 @@
                   window.parent.postMessage(JSON.stringify({
                     type: 'error',
                     data: error
-                  }, null, '\t'), window.location.href);
+                  }, null, '\t'), "*");
                 },
                 onCancelled: function () {
                   console.log(`function is onCancelled`)
                   window.parent.postMessage(JSON.stringify({
                     type: 'canceled',
-                  }, null, '\t'), window.location.href);
+                  }, null, '\t'), "*");
                 },
                 onDeclined: function (response) {
                   console.log(`function is onDeclined`)
                   window.parent.postMessage(JSON.stringify({
                     type: 'declined',
                     data: response
-                  }, null, '\t'), window.location.href);
+                  }, null, '\t'), "*");
                 },
                 onApproval: function (response) {
                   console.log(`function is onApproval - ${window.location.href}`)
                   window.parent.postMessage(JSON.stringify({
                     type: 'approved',
                     data: response
-                  }, null, '\t'), window.location.href);
+                  }, null, '\t'), "*");
                 }
             };
 
