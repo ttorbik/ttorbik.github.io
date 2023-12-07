@@ -30,11 +30,11 @@
         function receiveMessage(event) {
             // Check if the received message has a property 'type'
             console.log(`event = ${event}`);
-            //if (event.type) {
+            if (event.type) {
                 // Post the message to the parent window
                 window.location.href = "agrokapp://myapp"
                 //window.parent.postMessage(event.data, "*");
-            //}
+            }
         }
 
         // Function to get URL parameters
