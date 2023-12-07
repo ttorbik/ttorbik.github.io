@@ -29,9 +29,10 @@
         // Function to listen to messages from the iframe
         function receiveMessage(event) {
             // Check if the received message has a property 'type'
-            if (event.data) {
+            if (event.type) {
                 // Post the message to the parent window
-                window.parent.postMessage(event.data, "*");
+                window.location.href = "agrokapp://myapp"
+                //window.parent.postMessage(event.data, "*");
             }
         }
 
