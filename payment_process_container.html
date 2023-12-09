@@ -30,10 +30,11 @@
         function receiveMessage(event) {
             // Check if the received message has a property 'type'
             console.log(`event = ${event}`);
-            if (event.type) {
+            window.location.href = "https://ttorbik.github.io/agrok";
+            //if (event.type) {
                 // Post the message to the parent window
-                window.location.href = "https://ttorbik.github.io/agrok";
-            }
+              //  window.location.href = "https://ttorbik.github.io/agrok";
+            //}
         }
 
         // Function to get URL parameters
