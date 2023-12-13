@@ -26,11 +26,18 @@
         }
     </style>
     <script>
+        var fromMobileApp = 0;
         // Function to listen to messages from the iframe
         function receiveMessage(event) {
             // Check if the received message has a property 'type'
             console.log(`event = ${event}`);
-            window.location.href = "agrokapp://myapp";
+            if (event.data) {
+                if (fromMobileApp === 0) {
+                    window.parent.postMessage(event.data, "*");
+                } else {
+                    window.location.href = "agrokapp://myapp";    
+                }
+            }
             //if (event.type) {
                 // Post the message to the parent window
               //  window.location.href = "https://ttorbik.github.io/agrok";
@@ -49,13 +56,14 @@
 
         // Function to check if all required params are present
         function allParamsPresent() {
-            const requiredParams = ['amount', 'email', 'zip', 'address'];
+            const requiredParams = ['from_mobile_app', 'amount', 'email', 'zip', 'address'];
             return requiredParams.every(param => getParameterByName(param) !== null);
         }
 
         // Function to set the content based on parameter validation
         function setContent() {
             if (allParamsPresent()) {
+                fromMobileApp = getParameterByName('from_mobile_app')
                 // Set iframe source and display it
                 const iframe = document.querySelector('iframe');
                 iframe.src = buildIframeSrc();
