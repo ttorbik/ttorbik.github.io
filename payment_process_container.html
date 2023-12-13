@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Parameter Validation with Message Handling</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         /* Set body and html to full height and no margin */
         html, body {
@@ -27,16 +28,37 @@
     </style>
     <script>
         var fromMobileApp = 0;
+        var companyId = 0;
+        var amount = 0;
         // Function to listen to messages from the iframe
         function receiveMessage(event) {
             // Check if the received message has a property 'type'
             console.log(`event = ${event}`);
             if (event.data) {
-                if (fromMobileApp === 0) {
-                    window.parent.postMessage(event.data, "*");
-                } else {
-                    window.location.href = "agrokapp://myapp";    
-                }
+                var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/assignBarcodesFromPurchase';
+                fetch(url, {
+                  method: 'POST', // or 'GET', depending on your backend
+                  body: JSON.stringify({
+                      companyId: companyId,
+                      amount: amount
+                  }), // data can be `string` or {object}!
+                  headers: {
+                       'Content-Type': 'application/json',
+                  },
+                })
+                .then(data => {
+                    if (fromMobileApp === 0) {
+                        window.parent.postMessage(event.data, "*");
+                    } else {
+                        window.location.href = "agrokapp://myapp";    
+                    }
+                  // Handle success here
+                })
+                .catch((error) => {
+                  console.log(`Errorcito + ${error}`);
+                  // Handle errors here
+                });
+                
             }
             //if (event.type) {
                 // Post the message to the parent window
@@ -56,7 +78,7 @@
 
         // Function to check if all required params are present
         function allParamsPresent() {
-            const requiredParams = ['from_mobile_app', 'amount', 'email', 'zip', 'address'];
+            const requiredParams = ['from_mobile_app', 'amount', 'email', 'zip', 'address', 'company_id'];
             return requiredParams.every(param => getParameterByName(param) !== null);
         }
 
@@ -64,6 +86,8 @@
         function setContent() {
             if (allParamsPresent()) {
                 fromMobileApp = getParameterByName('from_mobile_app')
+                companyId = getParameterByName('company_id')
+                amount = getParameterByName('amount')
                 // Set iframe source and display it
                 const iframe = document.querySelector('iframe');
                 iframe.src = buildIframeSrc();
