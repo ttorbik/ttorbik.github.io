@@ -50,6 +50,7 @@
                   },
                 })
                 .then(data => {
+                    console.log(`success`);
                     $('.loading-message').hide();
                     $('.success-message').show();
                     setTimeout(() => {
@@ -92,17 +93,20 @@
 
         function setContent() {
             if (allParamsPresent()) {
+                console.log(`all params present`);
                 fromMobileApp = getParameterByName('from_mobile_app')
                 companyId = getParameterByName('company_id')
                 amount = getParameterByName('amount')
                 const iframe = document.querySelector('iframe');
                 $('.loading-message').show();
                 iframe.onload = function() {
+                    console.log(`iframe loaded`);
                     $('.loading-message').hide();
                 };
                 iframe.src = buildIframeSrc();
                 iframe.style.display = 'block';
             } else {
+                console.log(`some params not present`);
                 document.body.innerHTML = '<div class="invalid-message">Invalid params</div>';
             }
         }
