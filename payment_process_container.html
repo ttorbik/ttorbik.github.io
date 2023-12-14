@@ -47,7 +47,7 @@
                   },
                 })
                 .then(data => {
-                    if (fromMobileApp === "0") {
+                    if (fromMobileApp == "0") {
                         window.parent.postMessage(event.data, "*");
                     } else {
                         window.location.href = "agrokapp://myapp";    
