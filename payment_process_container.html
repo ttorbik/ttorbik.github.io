@@ -27,7 +27,7 @@
         }
     </style>
     <script>
-        var fromMobileApp = 0;
+        var fromMobileApp = '';
         var companyId = 0;
         var amount = 0;
         // Function to listen to messages from the iframe
@@ -47,6 +47,7 @@
                   },
                 })
                 .then(data => {
+                    console.log(`here it is ${fromMobileApp}`);
                     if (fromMobileApp == "0") {
                         window.parent.postMessage(event.data, "*");
                     } else {
