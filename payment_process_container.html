@@ -86,9 +86,7 @@
                 });
             } else if (event.type == 'cancelled') {
                 if (fromMobileApp === "0") {
-                    window.parent.postMessage({
-                                result: 'cancelled'
-                            }, "*");
+                    window.parent.postMessage(event, "*");
                 } else {
                     window.location.href = "agrokapp://myapp";    
                 }
