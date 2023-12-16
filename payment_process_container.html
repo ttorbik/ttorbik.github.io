@@ -40,7 +40,8 @@
         var companyId = 0;
         var amount = 0;
         
-        function receiveMessage(event) {
+        function receiveMessage(eventMessage) {
+            var event = JSON.parse(eventMessage.data);
             console.log(`event = ${event} // event.type = ${event.type} // isCancelled = ${event.type == 'cancelled'}`);
             if (event.type == 'approved') {
                 $('.loading-message').show();
