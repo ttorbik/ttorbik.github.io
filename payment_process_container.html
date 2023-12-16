@@ -62,9 +62,7 @@
                     $('.success-message').show();
                     setTimeout(() => {
                         if (fromMobileApp === "0") {
-                            window.parent.postMessage({
-                                result: 'approved'
-                            }, "*");
+                            window.parent.postMessage(event, "*");
                         } else {
                             window.location.href = "agrokapp://myapp";    
                         }
@@ -86,7 +84,9 @@
                 });
             } else if (event.type == 'cancelled') {
                 if (fromMobileApp === "0") {
-                    window.parent.postMessage(event, "*");
+                    window.parent.postMessage({
+                                result: 'cancelled'
+                            }, "*");
                 } else {
                     window.location.href = "agrokapp://myapp";    
                 }
