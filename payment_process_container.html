@@ -42,6 +42,7 @@
         
         function receiveMessage(eventMessage) {
             var event = JSON.parse(eventMessage.data);
+            console.log(`here's the data ${event}`);
             if (event.type == 'approved') {
                 $('.loading-message').show();
                 var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/assignBarcodesFromPurchase';
