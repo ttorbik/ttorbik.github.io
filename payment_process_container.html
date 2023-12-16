@@ -41,7 +41,7 @@
         var amount = 0;
         
         function receiveMessage(event) {
-            console.log(`event = ${event}`);
+            console.log(`event = ${event} // event.type = ${event.type} // isCancelled = ${event.type == 'cancelled'}`);
             if (event.type == 'approved') {
                 $('.loading-message').show();
                 var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/assignBarcodesFromPurchase';
