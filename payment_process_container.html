@@ -62,7 +62,9 @@
                     $('.success-message').show();
                     setTimeout(() => {
                         if (fromMobileApp === "0") {
-                            window.parent.postMessage(event.data, "*");
+                            window.parent.postMessage({
+                                result: 'success'
+                            }, "*");
                         } else {
                             window.location.href = "agrokapp://myapp";    
                         }
@@ -74,7 +76,9 @@
                   $('.error-message').show();
                   setTimeout(() => {
                       if (fromMobileApp === "0") {
-                            window.parent.postMessage(event.data, "*");
+                            window.parent.postMessage({
+                                result: 'error'
+                            }, "*");
                         } else {
                             window.location.href = "agrokapp://myapp";    
                         }
@@ -82,14 +86,34 @@
                 });
             } else if (event.type == 'cancelled') {
                 if (fromMobileApp === "0") {
-                    window.parent.postMessage(event.data, "*");
+                    window.parent.postMessage({
+                                result: 'cancelled'
+                            }, "*");
                 } else {
                     window.location.href = "agrokapp://myapp";    
                 }
             } else if (event.type == 'error') {
                 $('.error-message').show();
+                setTimeout(() => {
+                        if (fromMobileApp === "0") {
+                            window.parent.postMessage({
+                                result: 'error'
+                            }, "*");
+                        } else {
+                            window.location.href = "agrokapp://myapp";    
+                        }
+                    }, 2000);
             } else if (event.type == 'declined') {
                 $('.declined-message').show();
+                setTimeout(() => {
+                        if (fromMobileApp === "0") {
+                            window.parent.postMessage({
+                                result: 'declined'
+                            }, "*");
+                        } else {
+                            window.location.href = "agrokapp://myapp";    
+                        }
+                    }, 2000);
             }
         }
 
