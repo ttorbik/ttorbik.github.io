@@ -42,7 +42,6 @@
         
         function receiveMessage(eventMessage) {
             var event = JSON.parse(eventMessage.data);
-            console.log(`event = ${event} // event.type = ${event.type} // isCancelled = ${event.type == 'cancelled'}`);
             if (event.type == 'approved') {
                 $('.loading-message').show();
                 var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/assignBarcodesFromPurchase';
