@@ -8,16 +8,21 @@
         html, body {
             height: 100%;
             margin: 0;
+            padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column; /* Align items vertically */
+            justify-content: center; /* Center items vertically */
+            align-items: center; /* Center items horizontally */
             text-align: center;
         }
         .invalid-message, .loading-message, .success-message, .error-message {
             font-size: 24px;
             display: none;
+            max-width: 90%; /* Limit the width to 90% of the container */
+            margin: 0 auto; /* Auto margins for horizontal centering */
+            text-align: center;
         }
-        .loading-message, .success-message, .error-message {
+        .loading-message, .success-message {
             color: green;
         }
         .error-message {
