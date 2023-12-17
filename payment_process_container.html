@@ -105,9 +105,7 @@
                 $('.error-message').show();
                 setTimeout(() => {
                         if (fromMobileApp === "0") {
-                            window.parent.postMessage({
-                                result: 'error'
-                            }, "*");
+                            window.parent.postMessage(event.data, "*");
                         } else {
                             window.location.href = "agrokapp://myapp";    
                         }
