@@ -73,7 +73,9 @@
                     $('.success-message').show();
                     setTimeout(() => {
                         if (fromMobileApp === "0") {
-                            window.parent.postMessage(event, "*");
+                            window.parent.postMessage({
+                                result: 'approved'
+                            }, "*");
                         } else {
                             window.location.href = "agrokapp://myapp";    
                         }
@@ -105,7 +107,9 @@
                 $('.error-message').show();
                 setTimeout(() => {
                         if (fromMobileApp === "0") {
-                            window.parent.postMessage(event.data, "*");
+                            window.parent.postMessage({
+                                result: 'error'
+                            }, "*");
                         } else {
                             window.location.href = "agrokapp://myapp";    
                         }
