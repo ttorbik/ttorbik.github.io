@@ -42,24 +42,22 @@
         var amount = 0;
         var cardToken = '';
         var newCardToken;
+
         
-        function receiveMessage(eventMessage) {
-            var event = JSON.parse(eventMessage.data);
-            console.log(`here's the data ${event}`);
-            if (event.type == 'approved') {
-                $('.loading-message').show();
-                const body = {
-                      companyId: companyId,
-                      amount: amount,
-                  }
-                if (isAdmin == 1 && event.data['ssl_token'] != null && event.data['ssl_token'] != '') {
-                    body.cardToken = event.data['ssl_token'];
-                    body.cardCompanyName = event.data['ssl_card_short_description'];
-                    body.cardExpDate = event.data['ssl_exp_date'];
-                    body.cardNumber = event.data['ssl_card_number'];
-                    body.companyId = companyId;
+        function xmlStringToMap(xmlString) {
+            let parser = new DOMParser();
+            let xmlDoc = parser.parseFromString(xmlString, "application/xml");
+            let map = new Map();
+            xmlNode.childNodes.forEach(node => {
+                if (node.nodeType === 1) { // Element
+                    map.set(node.nodeName, node.textContent);
                 }
-                var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/assignBarcodesFromPurchase';
+            });
+            return map;
+        }
+
+        function assignBarcodes(body) {
+            var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/assignBarcodesFromPurchase';
                 fetch(url, {
                   method: 'POST',
                   body: JSON.stringify(body),
@@ -95,6 +93,25 @@
                         }
                   }, 2000);
                 });
+        }
+        
+        function receiveMessage(eventMessage) {
+            var event = JSON.parse(eventMessage.data);
+            console.log(`here's the data ${event}`);
+            if (event.type == 'approved') {
+                $('.loading-message').show();
+                const body = {
+                      companyId: companyId,
+                      amount: amount,
+                  }
+                if (isAdmin == 1 && event.data['ssl_token'] != null && event.data['ssl_token'] != '') {
+                    body.cardToken = event.data['ssl_token'];
+                    body.cardCompanyName = event.data['ssl_card_short_description'];
+                    body.cardExpDate = event.data['ssl_exp_date'];
+                    body.cardNumber = event.data['ssl_card_number'];
+                    body.companyId = companyId;
+                }
+                assignBarcodes(body);
             } else if (event.type == 'cancelled') {
                 if (fromMobileApp === "0") {
                     window.parent.postMessage({
@@ -150,14 +167,46 @@
                 isAdmin = getParameterByName('is_admin')
                 amount = getParameterByName('amount')
                 cardToken = getParameterByName('card_token')
-                const iframe = document.querySelector('iframe');
                 $('.loading-message').show();
-                iframe.onload = function() {
-                    console.log(`iframe loaded`);
-                    $('.loading-message').hide();
-                };
-                iframe.src = buildIframeSrc();
-                iframe.style.display = 'block';
+                if (cardToken != null) {
+                    var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/payWithToken';
+                    fetch(url, {
+                      method: 'POST',
+                      body: JSON.stringify(body),
+                      headers: {
+                           'Content-Type': 'application/json',
+                      },
+                    })
+                    .then(data => {
+                        const body = {
+                          companyId: companyId,
+                          amount: amount,
+                      }
+                        assignBarcodes(body);
+                    })
+                    .catch((error) => {
+                      console.log(`Errorcito + ${error}`);
+                      $('.loading-message').hide();
+                      $('.error-message').show();
+                      setTimeout(() => {
+                          if (fromMobileApp === "0") {
+                                window.parent.postMessage({
+                                    result: 'error'
+                                }, "*");
+                            } else {
+                                window.location.href = "agrokapp://myapp";    
+                            }
+                      }, 2000);
+                    });
+                } else {
+                    const iframe = document.querySelector('iframe');
+                    iframe.onload = function() {
+                        console.log(`iframe loaded`);
+                        $('.loading-message').hide();
+                    };
+                    iframe.src = buildIframeSrc();
+                    iframe.style.display = 'block';
+                }
             } else {
                 console.log(`some params not present`);
                 document.body.innerHTML = '<div class="invalid-message">Invalid params</div>';
