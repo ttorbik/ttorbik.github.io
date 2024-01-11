@@ -170,6 +170,11 @@
                 $('.loading-message').show();
                 if (cardToken != null) {
                     var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/payWithToken';
+                    const body = {
+                          companyId: companyId,
+                          amount: amount,
+                        token: cardToken
+                      }
                     fetch(url, {
                       method: 'POST',
                       body: JSON.stringify(body),
