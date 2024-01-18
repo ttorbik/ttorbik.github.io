@@ -225,6 +225,7 @@
 
         function buildIframeSrc() {
             const baseUrl = "https://ttorbik.github.io/payment_process.html";
+            console.log(`check1 = ${getParameterByName('verification_token')} / check2 = ${verificationToken}`);
             const params = {
                 amount: getParameterByName('amount'),
                 email: getParameterByName('email'),
