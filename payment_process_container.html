@@ -39,8 +39,10 @@
         var fromMobileApp = '';
         var companyId = 0;
         var isAdmin = 0;
+        var saveCard = 0;
         var amount = 0;
         var cardToken = '';
+        var verificationToken = '';
         var newCardToken;
 
         
@@ -155,7 +157,7 @@
         }
 
         function allParamsPresent() {
-            const requiredParams = ['from_mobile_app', 'amount', 'email', 'is_admin', 'zip', 'address', 'company_id'];
+            const requiredParams = ['from_mobile_app', 'amount', 'email', 'is_admin', 'zip', 'address', 'company_id', 'save_card', 'verification_token'];
             return requiredParams.every(param => getParameterByName(param) !== null);
         }
 
@@ -167,13 +169,16 @@
                 isAdmin = getParameterByName('is_admin')
                 amount = getParameterByName('amount')
                 cardToken = getParameterByName('card_token')
+                saveCard = getParameterByName('save_card')
+                verificationToken = getParameterByName('verification_token')
                 $('.loading-message').show();
                 if (cardToken != null) {
                     var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/payWithToken';
                     const body = {
                           companyId: companyId,
                           amount: amount,
-                        token: cardToken
+                        token: cardToken,
+                        verificationToken: verificationToken
                       }
                     fetch(url, {
                       method: 'POST',
@@ -225,7 +230,9 @@
                 email: getParameterByName('email'),
                 zip: getParameterByName('zip'),
                 address: getParameterByName('address'),
-                is_admin: isAdmin
+                is_admin: isAdmin,
+                save_card: saveCard,
+                verification_token: verificationToken
             };
             if (cardToken != null) {
                 params.card_token = cardToken;
