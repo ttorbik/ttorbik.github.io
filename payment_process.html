@@ -27,8 +27,10 @@
                 var key = decodeURIComponent(pair[0]);
                 var value = decodeURIComponent(pair[1]);
 
-                if (key === 'amount' || key === 'zip' || key === 'address' || key === 'email' || key === 'is_admin' || key === 'card_token' || key === 'companyId' || key === 'verificationToken') {
+                if (key === 'amount' || key === 'zip' || key === 'address' || key === 'email' || key === 'is_admin' || key === 'card_token' || key === 'companyId') {
                     queryParams[key] = value;
+                } else if (key === 'verificationToken') {
+                    queryParams['verificationToken'] = pair[1];
                 }
             }
 
