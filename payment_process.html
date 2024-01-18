@@ -39,7 +39,7 @@
 
         function callBackend() {
           var params = getQueryParameters();
-          if (params.amount === null || params.zip === null || params.address === null || params.email === null || params.is_admin === null || params.company_id === null || params.verificationToken === null) {
+          if (params.amount === null || params.zip === null || params.address === null || params.email === null || params.is_admin === null || params.companyId === null || params.verificationToken === null) {
               showResult('Error', 'Missing query parameters');
               return;
           }
