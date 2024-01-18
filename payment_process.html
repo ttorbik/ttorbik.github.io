@@ -15,7 +15,8 @@
                 zip: null,
                 address: null,
                 email: null,
-                companyId: null
+                companyId: null,
+                verificationToken: null
             };
 
             var queryString = window.location.search.substring(1);
@@ -26,7 +27,7 @@
                 var key = decodeURIComponent(pair[0]);
                 var value = decodeURIComponent(pair[1]);
 
-                if (key === 'amount' || key === 'zip' || key === 'address' || key === 'email' || key === 'is_admin' || key === 'card_token' || key === 'companyId') {
+                if (key === 'amount' || key === 'zip' || key === 'address' || key === 'email' || key === 'is_admin' || key === 'card_token' || key === 'companyId' || key === 'verificationToken') {
                     queryParams[key] = value;
                 }
             }
@@ -36,7 +37,7 @@
 
         function callBackend() {
           var params = getQueryParameters();
-          if (params.amount === null || params.zip === null || params.address === null || params.email === null || params.is_admin === null || params.company_id === null) {
+          if (params.amount === null || params.zip === null || params.address === null || params.email === null || params.is_admin === null || params.company_id === null || params.verificationToken === null) {
               showResult('Error', 'Missing query parameters');
               return;
           }
