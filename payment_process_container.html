@@ -156,6 +156,18 @@
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
+        function decodeVerificationToken(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+        
+            // Return the parameter value without decoding
+            return results[2].replace(/\+/g, ' ');
+        }
+        
+
         function allParamsPresent() {
             const requiredParams = ['from_mobile_app', 'amount', 'email', 'is_admin', 'zip', 'address', 'company_id', 'save_card', 'verification_token'];
             return requiredParams.every(param => getParameterByName(param) !== null);
@@ -170,7 +182,7 @@
                 amount = getParameterByName('amount')
                 cardToken = getParameterByName('card_token')
                 saveCard = getParameterByName('save_card')
-                verificationToken = getParameterByName('verification_token')
+                verificationToken = decodeVerificationToken('verification_token')
                 $('.loading-message').show();
                 if (cardToken != null) {
                     var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/payWithToken';
