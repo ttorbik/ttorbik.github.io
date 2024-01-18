@@ -235,6 +235,10 @@
             }
         }
 
+        function toUrlSafeBase64(base64String) {
+            return base64String.replace(/\+/g, '-').replace(/\//g, '_');
+        }
+
         function buildIframeSrc() {
             const baseUrl = "https://ttorbik.github.io/payment_process.html";
             console.log(`check1 = ${getParameterByName('verification_token')} / check2 = ${verificationToken}`);
@@ -251,7 +255,13 @@
                 params.card_token = cardToken;
             }
             
-            const queryString = Object.keys(params).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])).join('&');
+            const queryString = Object.keys(params).map(key => {
+                if (key == 'verificationToken') {
+                    `verificationToken=${toUrlSafeBase64(verificationToken}`
+                } else
+                    encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+                }
+            }).join('&');
             return baseUrl + '?' + queryString;
         }
 
