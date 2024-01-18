@@ -258,9 +258,9 @@
             
             const queryString = Object.keys(params).map(key => {
                 if (key == 'verificationToken') {
-                    `verificationToken=${toUrlSafeBase64(verificationToken)}`
+                    return `verificationToken=${toUrlSafeBase64(verificationToken)}`
                 } else {
-                    encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+                    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
                 }
             }).join('&');
             return baseUrl + '?' + queryString;
