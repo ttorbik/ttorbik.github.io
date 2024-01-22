@@ -200,7 +200,7 @@
                       },
                     })
                     .then(data => {
-                        console.log(`data from payWithToken = ${data}`);
+                        console.log(`data from payWithToken = ${JSON.stringify(data)}`);
                         const body = {
                           companyId: companyId,
                           amount: amount,
