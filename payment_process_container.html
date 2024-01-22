@@ -184,7 +184,7 @@
                 saveCard = getParameterByName('save_card')
                 verificationToken = decodeVerificationToken('verification_token')
                 $('.loading-message').show();
-                if (cardToken != null) {
+                if (cardToken != null && cardToken != "") {
                     var url = 'https://us-central1-agro-k-dev.cloudfunctions.net/payWithToken';
                     const body = {
                           companyId: companyId,
