@@ -108,7 +108,7 @@
                   }, null, '\t'), "https://ttorbik.github.io/payment_process_container.html");
                 },
                 onApproval: function (response) {
-                  console.log(`function is onApproval - ${response}`)
+                  console.log(`function is onApproval - ${JSON.stringify(response)}`)
                   window.parent.postMessage(JSON.stringify({
                     type: 'approved',
                     data: response
